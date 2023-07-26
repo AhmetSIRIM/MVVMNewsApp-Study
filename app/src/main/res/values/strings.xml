@@ -1,3 +1,12 @@
 <resources>
     <string name="app_name">MVVMNewsApp Study</string>
+    <string name="favorite_button">Favorite button</string>
+    <string name="search">Search</string>
+    <string name="breaking_news">Breaking News</string>
+    <string name="saved_news">Saved News</string>
+    <string name="search_news">Search News</string>
+    <string name="hello_from_savednewsfragment">Hello from SavedNewsFragment</string>
+    <string name="hello_from_articlefragment">Hello from ArticleFragment</string>
+    <string name="hello_from_breakingnewsfragment">Hello from BreakingNewsFragment</string>
+    <string name="hello_from_searchnewsfragment">Hello from SearchNewsFragment</string>
 </resources>
