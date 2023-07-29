@@ -9,4 +9,5 @@
     <string name="hello_from_articlefragment">Hello from ArticleFragment</string>
     <string name="hello_from_breakingnewsfragment">Hello from BreakingNewsFragment</string>
     <string name="hello_from_searchnewsfragment">Hello from SearchNewsFragment</string>
+    <string name="article_image">Article Image</string>
 </resources>

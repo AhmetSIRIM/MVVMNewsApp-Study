@@ -1,20 +1,36 @@
 package com.asirim.mvvmnewsappstudy.ui.savednews
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.asirim.mvvmnewsappstudy.R
+import androidx.fragment.app.Fragment
+import com.asirim.mvvmnewsappstudy.databinding.FragmentSavedNewsBinding
+import com.asirim.mvvmnewsappstudy.ui.NewsActivity
+import com.asirim.mvvmnewsappstudy.ui.NewsViewModel
 
 class SavedNewsFragment : Fragment() {
+
+    private var fragmentSavedNewsBinding: FragmentSavedNewsBinding? = null
+    lateinit var newsViewModel: NewsViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_saved_news, container, false)
+    ): View {
+        val binding = FragmentSavedNewsBinding.inflate(inflater, container, false)
+        fragmentSavedNewsBinding = binding
+        return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        newsViewModel = (activity as NewsActivity).newsViewModel
+    }
+
+    override fun onDestroyView() {
+        fragmentSavedNewsBinding = null
+        super.onDestroyView()
     }
 
 }
