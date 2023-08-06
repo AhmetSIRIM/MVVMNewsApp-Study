@@ -12,7 +12,7 @@ import com.asirim.mvvmnewsappstudy.ui.NewsViewModel
 class SearchNewsFragment : Fragment() {
 
     private var fragmentSearchNewsBinding: FragmentSearchNewsBinding? = null
-    lateinit var newsViewModel: NewsViewModel
+    private lateinit var newsViewModel: NewsViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,

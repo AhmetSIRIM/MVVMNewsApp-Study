@@ -11,26 +11,20 @@ import com.asirim.mvvmnewsappstudy.ui.NewsViewModel
 
 class ArticleFragment : Fragment() {
 
-    private var fragmentArticleBinding: FragmentArticleBinding? = null
+    private lateinit var binding: FragmentArticleBinding
     lateinit var newsViewModel: NewsViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        val binding = FragmentArticleBinding.inflate(inflater, container, false)
-        fragmentArticleBinding = binding
+        binding = FragmentArticleBinding.inflate(layoutInflater)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         newsViewModel = (activity as NewsActivity).newsViewModel
-    }
-
-    override fun onDestroyView() {
-        fragmentArticleBinding = null
-        super.onDestroyView()
     }
 
 }
