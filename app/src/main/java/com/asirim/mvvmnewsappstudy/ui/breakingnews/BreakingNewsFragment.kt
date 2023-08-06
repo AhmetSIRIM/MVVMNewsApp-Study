@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.asirim.mvvmnewsappstudy.R
@@ -35,6 +36,8 @@ class BreakingNewsFragment : Fragment() {
         newsViewModel = (activity as NewsActivity).newsViewModel
 
         setupRecyclerView()
+
+        getNewsFromUsOrTrBySwitch()
 
         newsViewModel.breakingNews.observe(
             viewLifecycleOwner
@@ -75,6 +78,39 @@ class BreakingNewsFragment : Fragment() {
             adapter = articleAdapter
             layoutManager = LinearLayoutManager(activity)
         }
+    }
+
+    private fun getNewsFromUsOrTrBySwitch() {
+        binding.switchUsOrTr.setOnCheckedChangeListener { _, isChecked ->
+            when (isChecked) {
+
+                true -> {
+                    newsViewModel.getBreakingNews(TR)
+                    binding.imageViewUsOrTr.setImageDrawable(
+                        ContextCompat.getDrawable(
+                            requireActivity(),
+                            R.drawable.ic_tr_flag
+                        )
+                    )
+                }
+
+                false -> {
+                    newsViewModel.getBreakingNews(US)
+                    binding.imageViewUsOrTr.setImageDrawable(
+                        ContextCompat.getDrawable(
+                            requireActivity(),
+                            R.drawable.ic_us_flag
+                        )
+                    )
+                }
+
+            }
+        }
+    }
+
+    companion object {
+        const val TR = "tr"
+        const val US = "us"
     }
 
 }

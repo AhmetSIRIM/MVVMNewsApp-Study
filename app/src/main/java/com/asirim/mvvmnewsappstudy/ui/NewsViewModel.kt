@@ -20,7 +20,7 @@ class NewsViewModel(
         getBreakingNews("us")
     }
 
-    private fun getBreakingNews(countreyCode: String) = viewModelScope.launch {
+    fun getBreakingNews(countreyCode: String) = viewModelScope.launch {
 
         breakingNews.postValue(Resource.Loading())
 
