@@ -1,14 +1,13 @@
 package com.asirim.mvvmnewsappstudy.ui.adapter
 
-import android.os.Build
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.annotation.RequiresApi
 import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.asirim.mvvmnewsappstudy.data.dto.Article
 import com.asirim.mvvmnewsappstudy.databinding.ItemArticleBinding
+import com.asirim.mvvmnewsappstudy.util.formatStringTime
 import com.bumptech.glide.Glide
 
 class ArticleAdapter : RecyclerView.Adapter<ArticleViewHolder>() {
@@ -40,7 +39,6 @@ class ArticleAdapter : RecyclerView.Adapter<ArticleViewHolder>() {
 
     }
 
-    @RequiresApi(Build.VERSION_CODES.O)
     override fun onBindViewHolder(holder: ArticleViewHolder, position: Int) {
 
         val article = differ.currentList[position]
@@ -53,7 +51,7 @@ class ArticleAdapter : RecyclerView.Adapter<ArticleViewHolder>() {
                 textViewSource.append("\n${article.source?.name.toString()}")
                 textViewTitle.text = article.title.toString()
                 textViewDescription.text = article.description.toString()
-                textViewPublishedAt.append("\n${article.publishedAt.toString()}")
+                textViewPublishedAt.append("\n${article.publishedAt.toString().formatStringTime()}")
             }
 
             onItemClickListener?.let {
@@ -69,6 +67,5 @@ class ArticleAdapter : RecyclerView.Adapter<ArticleViewHolder>() {
     fun setOnClickListener(listener: (Article) -> Unit) {
         onItemClickListener = listener
     }
-
 
 }
