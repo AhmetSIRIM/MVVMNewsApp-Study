@@ -9,9 +9,11 @@ class NewsRepository(
     val articleDatabase: ArticleDatabase
 ) {
     suspend fun getBreakingNews(countryCode: String, pageNumber: Int): Response<NewsResponse> {
-
         return RetrofitInstance.newsApi.getBreakingNews(countryCode, pageNumber)
+    }
 
+    suspend fun getSearchedNews(searchQuery: String, pageNumber: Int): Response<NewsResponse> {
+        return RetrofitInstance.newsApi.getSearchedNews(searchQuery, pageNumber)
     }
 
 }

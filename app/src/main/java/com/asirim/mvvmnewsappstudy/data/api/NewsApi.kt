@@ -2,6 +2,7 @@ package com.asirim.mvvmnewsappstudy.data.api
 
 import com.asirim.mvvmnewsappstudy.BuildConfig.NEWS_API_KEY
 import com.asirim.mvvmnewsappstudy.data.dto.NewsResponse
+import com.asirim.mvvmnewsappstudy.ui.breakingnews.BreakingNewsFragment.Companion.TR
 import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Query
@@ -11,7 +12,7 @@ interface NewsApi {
     @GET("top-headlines")
     suspend fun getBreakingNews(
         @Query("country")
-        countryCode: String = "tr",
+        countryCode: String = TR,
         @Query("page")
         pageNumber: Int = 1,
         @Query("apiKey")
@@ -19,9 +20,9 @@ interface NewsApi {
     ): Response<NewsResponse>
 
     @GET("everything")
-    suspend fun searchForNews(
+    suspend fun getSearchedNews(
         @Query("q")
-        searchQuery: String = "tr",
+        searchQuery: String,
         @Query("page")
         pageNumber: Int = 1,
         @Query("apiKey")

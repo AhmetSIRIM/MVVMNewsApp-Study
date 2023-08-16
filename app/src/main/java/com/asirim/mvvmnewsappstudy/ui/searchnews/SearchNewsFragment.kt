@@ -4,33 +4,99 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.asirim.mvvmnewsappstudy.R
 import com.asirim.mvvmnewsappstudy.databinding.FragmentSearchNewsBinding
 import com.asirim.mvvmnewsappstudy.ui.NewsActivity
 import com.asirim.mvvmnewsappstudy.ui.NewsViewModel
+import com.asirim.mvvmnewsappstudy.ui.adapter.ArticleAdapter
+import com.asirim.mvvmnewsappstudy.util.Constant.SEARCH_NEWS_TIME_DELAY
+import com.asirim.mvvmnewsappstudy.util.Resource
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.MainScope
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
 class SearchNewsFragment : Fragment() {
 
-    private var fragmentSearchNewsBinding: FragmentSearchNewsBinding? = null
+    private lateinit var binding: FragmentSearchNewsBinding
     private lateinit var newsViewModel: NewsViewModel
+    private lateinit var articleAdapter: ArticleAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        val binding = FragmentSearchNewsBinding.inflate(inflater, container, false)
-        fragmentSearchNewsBinding = binding
+        binding = FragmentSearchNewsBinding.inflate(layoutInflater)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
         newsViewModel = (activity as NewsActivity).newsViewModel
+
+        setupRecyclerView()
+
+        var job: Job? = null
+        binding.editTextSearch.addTextChangedListener { editTextSearchEditable ->
+
+            job?.cancel()
+            job = MainScope().launch {
+                delay(SEARCH_NEWS_TIME_DELAY)
+
+                editTextSearchEditable?.let {
+                    if (editTextSearchEditable.toString().isNotBlank()) {
+                        newsViewModel.getSearchedNews(editTextSearchEditable.toString())
+                    }
+                }
+
+            }
+
+        }
+
+        newsViewModel.searchedNews.observe(
+            viewLifecycleOwner
+        ) { searchedNewsResponse ->
+
+            when (searchedNewsResponse) {
+
+                is Resource.Error -> Toast.makeText(
+                    activity,
+                    R.string.unknown_error,
+                    Toast.LENGTH_SHORT
+                ).show()
+
+                is Resource.Loading -> showProgressBar()
+
+                is Resource.Success -> {
+                    hideProgressBar()
+                    searchedNewsResponse.data?.let { articleAdapter.differ.submitList(it.articles) }
+                }
+
+            }
+
+        }
+
     }
 
-    override fun onDestroyView() {
-        fragmentSearchNewsBinding = null
-        super.onDestroyView()
+    private fun hideProgressBar() {
+        binding.progressBarPagination.visibility = View.INVISIBLE
+    }
+
+    private fun showProgressBar() {
+        binding.progressBarPagination.visibility = View.VISIBLE
+    }
+
+    private fun setupRecyclerView() {
+        articleAdapter = ArticleAdapter()
+        binding.recyclerViewSearchedNews.apply {
+            adapter = articleAdapter
+            layoutManager = LinearLayoutManager(activity)
+        }
     }
 
 }

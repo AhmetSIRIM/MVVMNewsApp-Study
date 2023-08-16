@@ -41,8 +41,9 @@ class BreakingNewsFragment : Fragment() {
 
         newsViewModel.breakingNews.observe(
             viewLifecycleOwner
-        ) { response ->
-            when (response) {
+        ) { breakingNewsResponse ->
+
+            when (breakingNewsResponse) {
 
                 is Resource.Error -> Toast.makeText(
                     activity,
@@ -54,9 +55,7 @@ class BreakingNewsFragment : Fragment() {
 
                 is Resource.Success -> {
                     hideProgressBar()
-                    response.data?.let { newsResponse ->
-                        articleAdapter.differ.submitList(newsResponse.articles)
-                    }
+                    breakingNewsResponse.data?.let { articleAdapter.differ.submitList(it.articles) }
                 }
 
             }
@@ -96,6 +95,7 @@ class BreakingNewsFragment : Fragment() {
 
                 false -> {
                     newsViewModel.getBreakingNews(US)
+                    setupRecyclerView()
                     binding.imageViewUsOrTr.setImageDrawable(
                         ContextCompat.getDrawable(
                             requireActivity(),

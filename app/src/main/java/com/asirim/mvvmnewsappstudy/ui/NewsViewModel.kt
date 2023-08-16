@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.asirim.mvvmnewsappstudy.data.dto.NewsResponse
 import com.asirim.mvvmnewsappstudy.data.repository.NewsRepository
+import com.asirim.mvvmnewsappstudy.ui.breakingnews.BreakingNewsFragment.Companion.US
 import com.asirim.mvvmnewsappstudy.util.Resource
 import kotlinx.coroutines.launch
 import retrofit2.Response
@@ -16,17 +17,20 @@ class NewsViewModel(
     val breakingNews: MutableLiveData<Resource<NewsResponse>> = MutableLiveData()
     var breakingNewsPage = 1
 
+    val searchedNews: MutableLiveData<Resource<NewsResponse>> = MutableLiveData()
+    var searchNewsPage = 1
+
     init {
-        getBreakingNews("us")
+        getBreakingNews(US)
     }
 
-    fun getBreakingNews(countreyCode: String) = viewModelScope.launch {
+    fun getBreakingNews(countryCode: String) = viewModelScope.launch {
 
         breakingNews.postValue(Resource.Loading())
 
-        val newsResponse = newsRepository.getBreakingNews(countreyCode, breakingNewsPage)
+        val breakingNewsResponse = newsRepository.getBreakingNews(countryCode, breakingNewsPage)
 
-        breakingNews.postValue(handleBreakingNewsResponse(newsResponse))
+        breakingNews.postValue(handleBreakingNewsResponse(breakingNewsResponse))
 
     }
 
@@ -41,5 +45,28 @@ class NewsViewModel(
         return Resource.Error(message = newsResponse.message())
 
     }
+
+    fun getSearchedNews(searchQuery: String) = viewModelScope.launch {
+
+        searchedNews.postValue(Resource.Loading())
+
+        val searchedNewsResponse = newsRepository.getSearchedNews(searchQuery, searchNewsPage)
+
+        searchedNews.postValue(handleSearchedNewsResponse(searchedNewsResponse))
+
+    }
+
+    private fun handleSearchedNewsResponse(newsResponse: Response<NewsResponse>): Resource<NewsResponse> {
+
+        if (newsResponse.isSuccessful) {
+            newsResponse.body()?.let { resultResponse ->
+                return Resource.Success(resultResponse)
+            }
+        }
+
+        return Resource.Error(message = newsResponse.message())
+
+    }
+
 
 }
