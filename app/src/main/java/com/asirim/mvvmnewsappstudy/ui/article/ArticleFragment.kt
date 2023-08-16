@@ -17,7 +17,7 @@ class ArticleFragment : Fragment() {
     private lateinit var newsViewModel: NewsViewModel
 
     /* If you want to use serialization watch this: https://youtu.be/SlOTIcDQOqI */
-    val args: ArticleFragmentArgs by navArgs()
+    private val args: ArticleFragmentArgs by navArgs()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
