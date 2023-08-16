@@ -1,5 +1,6 @@
 package com.asirim.mvvmnewsappstudy.ui.adapter
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.AsyncListDiffer
@@ -13,8 +14,9 @@ import com.bumptech.glide.Glide
 class ArticleAdapter : RecyclerView.Adapter<ArticleViewHolder>() {
 
     private lateinit var binding: ItemArticleBinding
-    private var onItemClickListener: ((Article) -> Unit)? = null
-    private val differCallBack = object : DiffUtil.ItemCallback<Article>() {
+    private var onItemClickListener: ((String?) -> Unit)? = null
+
+    private val differCallback = object : DiffUtil.ItemCallback<Article>() {
 
         override fun areItemsTheSame(oldItem: Article, newItem: Article): Boolean {
             return oldItem.url == newItem.url
@@ -26,7 +28,7 @@ class ArticleAdapter : RecyclerView.Adapter<ArticleViewHolder>() {
 
     }
 
-    val differ = AsyncListDiffer(this, differCallBack)
+    val differ = AsyncListDiffer(this, differCallback)
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ArticleViewHolder {
 
         binding = ItemArticleBinding.inflate(
@@ -54,17 +56,19 @@ class ArticleAdapter : RecyclerView.Adapter<ArticleViewHolder>() {
                 textViewPublishedAt.append("\n${article.publishedAt.toString().formatStringTime()}")
             }
 
-            onItemClickListener?.let {
-                it(article)
-            }
+        }
 
+        holder.itemView.setOnClickListener {
+            onItemClickListener?.let {
+                it(article.url)
+            }
         }
 
     }
 
     override fun getItemCount() = differ.currentList.size
 
-    fun setOnClickListener(listener: (Article) -> Unit) {
+    fun setOnItemClickListener(listener: (String?) -> Unit) {
         onItemClickListener = listener
     }
 

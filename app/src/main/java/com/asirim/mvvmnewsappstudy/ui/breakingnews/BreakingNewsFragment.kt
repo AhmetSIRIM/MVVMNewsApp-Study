@@ -1,18 +1,21 @@
 package com.asirim.mvvmnewsappstudy.ui.breakingnews
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.asirim.mvvmnewsappstudy.R
 import com.asirim.mvvmnewsappstudy.databinding.FragmentBreakingNewsBinding
 import com.asirim.mvvmnewsappstudy.ui.NewsActivity
 import com.asirim.mvvmnewsappstudy.ui.NewsViewModel
 import com.asirim.mvvmnewsappstudy.ui.adapter.ArticleAdapter
+import com.asirim.mvvmnewsappstudy.util.Constant.MY_GITHUB_LINK_FOR_NULL_ARTICLE_URL
 import com.asirim.mvvmnewsappstudy.util.Resource
 
 class BreakingNewsFragment : Fragment() {
@@ -36,6 +39,17 @@ class BreakingNewsFragment : Fragment() {
         newsViewModel = (activity as NewsActivity).newsViewModel
 
         setupRecyclerView()
+
+        /* If you want to use serialization watch this: https://youtu.be/SlOTIcDQOqI */
+        articleAdapter.setOnItemClickListener {
+
+            findNavController().navigate(
+                BreakingNewsFragmentDirections.actionBreakingNewsFragmentToArticleFragment(
+                    it ?: MY_GITHUB_LINK_FOR_NULL_ARTICLE_URL
+                )
+            )
+
+        }
 
         getNewsFromUsOrTrBySwitch()
 
