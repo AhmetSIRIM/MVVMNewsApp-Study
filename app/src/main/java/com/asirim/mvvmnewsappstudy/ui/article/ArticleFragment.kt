@@ -15,9 +15,7 @@ class ArticleFragment : Fragment() {
 
     private lateinit var binding: FragmentArticleBinding
     private lateinit var newsViewModel: NewsViewModel
-
-    /* If you want to use serialization watch this: https://youtu.be/SlOTIcDQOqI */
-    private val args: ArticleFragmentArgs by navArgs()
+    private val args: ArticleFragmentArgs by navArgs() /* If you want to use Serializable watch this: https://youtu.be/SlOTIcDQOqI */
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -32,10 +30,8 @@ class ArticleFragment : Fragment() {
 
         newsViewModel = (activity as NewsActivity).newsViewModel
 
-        binding.webViewArticle.apply {
-            webViewClient = WebViewClient()
-            loadUrl(args.articleUrl)
-        }
+        binding.webViewArticle.webViewClient = WebViewClient()
+        binding.webViewArticle.loadUrl(args.articleUrl)
 
     }
 

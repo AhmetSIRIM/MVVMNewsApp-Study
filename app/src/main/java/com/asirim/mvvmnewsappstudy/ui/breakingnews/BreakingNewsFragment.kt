@@ -14,7 +14,7 @@ import com.asirim.mvvmnewsappstudy.databinding.FragmentBreakingNewsBinding
 import com.asirim.mvvmnewsappstudy.ui.NewsActivity
 import com.asirim.mvvmnewsappstudy.ui.NewsViewModel
 import com.asirim.mvvmnewsappstudy.ui.adapter.ArticleAdapter
-import com.asirim.mvvmnewsappstudy.util.Constant.MY_GITHUB_LINK_FOR_NULL_ARTICLE_URL
+import com.asirim.mvvmnewsappstudy.util.Constants.MY_GITHUB_LINK_FOR_NULL_ARTICLE_URL
 import com.asirim.mvvmnewsappstudy.util.Resource
 
 class BreakingNewsFragment : Fragment() {

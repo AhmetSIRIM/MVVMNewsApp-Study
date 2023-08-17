@@ -1,6 +1,6 @@
 package com.asirim.mvvmnewsappstudy.data.api
 
-import com.asirim.mvvmnewsappstudy.util.Constant.BASE_URL
+import com.asirim.mvvmnewsappstudy.util.Constants.BASE_URL
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
