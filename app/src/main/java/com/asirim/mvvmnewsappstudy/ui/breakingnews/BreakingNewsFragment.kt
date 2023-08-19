@@ -16,6 +16,7 @@ import com.asirim.mvvmnewsappstudy.ui.NewsActivity
 import com.asirim.mvvmnewsappstudy.ui.NewsViewModel
 import com.asirim.mvvmnewsappstudy.ui.adapter.ArticleAdapter
 import com.asirim.mvvmnewsappstudy.util.Resource
+import com.asirim.mvvmnewsappstudy.util.safeNavigate
 
 class BreakingNewsFragment : Fragment() {
 
@@ -40,7 +41,7 @@ class BreakingNewsFragment : Fragment() {
         setupRecyclerView()
 
         articleAdapter.setOnItemClickListener {
-            findNavController().navigate(
+            findNavController().safeNavigate(
                 BreakingNewsFragmentDirections
                     .actionBreakingNewsFragmentToArticleFragment(it)
             )

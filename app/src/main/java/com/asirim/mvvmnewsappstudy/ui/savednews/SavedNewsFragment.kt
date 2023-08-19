@@ -14,6 +14,7 @@ import com.asirim.mvvmnewsappstudy.databinding.FragmentSavedNewsBinding
 import com.asirim.mvvmnewsappstudy.ui.NewsActivity
 import com.asirim.mvvmnewsappstudy.ui.NewsViewModel
 import com.asirim.mvvmnewsappstudy.ui.adapter.ArticleAdapter
+import com.asirim.mvvmnewsappstudy.util.safeNavigate
 import com.google.android.material.snackbar.Snackbar
 
 class SavedNewsFragment : Fragment() {
@@ -38,13 +39,10 @@ class SavedNewsFragment : Fragment() {
         setupRecyclerView()
 
         articleAdapter.setOnItemClickListener {
-
-            findNavController().navigate(
-                SavedNewsFragmentDirections.actionSavedNewsFragmentToArticleFragment(
-                    it
-                )
+            findNavController().safeNavigate(
+                SavedNewsFragmentDirections
+                    .actionSavedNewsFragmentToArticleFragment(it)
             )
-
         }
 
         val itemTouchHelperCallback = object : ItemTouchHelper.SimpleCallback(

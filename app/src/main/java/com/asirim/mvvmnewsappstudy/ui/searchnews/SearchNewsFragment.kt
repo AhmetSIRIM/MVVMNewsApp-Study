@@ -16,6 +16,7 @@ import com.asirim.mvvmnewsappstudy.ui.NewsViewModel
 import com.asirim.mvvmnewsappstudy.ui.adapter.ArticleAdapter
 import com.asirim.mvvmnewsappstudy.util.Constants.SEARCH_NEWS_TIME_DELAY
 import com.asirim.mvvmnewsappstudy.util.Resource
+import com.asirim.mvvmnewsappstudy.util.safeNavigate
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.delay
@@ -43,13 +44,10 @@ class SearchNewsFragment : Fragment() {
         setupRecyclerView()
 
         articleAdapter.setOnItemClickListener {
-
-            findNavController().navigate(
-                SearchNewsFragmentDirections.actionSearchNewsFragmentToArticleFragment(
-                    it
-                )
+            findNavController().safeNavigate(
+                SearchNewsFragmentDirections
+                    .actionSearchNewsFragmentToArticleFragment(it)
             )
-
         }
 
         var job: Job? = null
