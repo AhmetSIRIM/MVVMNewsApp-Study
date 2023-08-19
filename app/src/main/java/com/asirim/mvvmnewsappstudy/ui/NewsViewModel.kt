@@ -16,10 +16,11 @@ class NewsViewModel(
 ) : ViewModel() {
 
     val breakingNews: MutableLiveData<Resource<NewsResponse>> = MutableLiveData()
+    private var breakingNewsResponse: NewsResponse? = null
     var breakingNewsPage = 1
 
     val searchedNews: MutableLiveData<Resource<NewsResponse>> = MutableLiveData()
-    var searchNewsPage = 1
+    private var searchedNewsPage = 1
 
     init {
         getBreakingNews(US)
@@ -38,9 +39,29 @@ class NewsViewModel(
     private fun handleBreakingNewsResponse(newsResponse: Response<NewsResponse>): Resource<NewsResponse> {
 
         if (newsResponse.isSuccessful) {
-            newsResponse.body()?.let { resultResponse ->
-                return Resource.Success(resultResponse)
+            newsResponse.body()?.let { resultBreakingNewsResponse ->
+
+                breakingNewsPage++
+
+                when (breakingNewsResponse) {
+
+                    null -> breakingNewsResponse = resultBreakingNewsResponse
+
+                    else -> {
+
+                        val oldArticles = breakingNewsResponse?.articles
+                        val newArticles = resultBreakingNewsResponse.articles
+
+                        oldArticles?.addAll(newArticles ?: oldArticles)
+
+                    }
+
+                }
+
+                return Resource.Success(data = breakingNewsResponse ?: resultBreakingNewsResponse)
+
             }
+
         }
 
         return Resource.Error(message = newsResponse.message())
@@ -51,7 +72,7 @@ class NewsViewModel(
 
         searchedNews.postValue(Resource.Loading())
 
-        val searchedNewsResponse = newsRepository.getSearchedNews(searchQuery, searchNewsPage)
+        val searchedNewsResponse = newsRepository.getSearchedNews(searchQuery, searchedNewsPage)
 
         searchedNews.postValue(handleSearchedNewsResponse(searchedNewsResponse))
 
@@ -61,7 +82,7 @@ class NewsViewModel(
 
         if (newsResponse.isSuccessful) {
             newsResponse.body()?.let { resultResponse ->
-                return Resource.Success(resultResponse)
+                return Resource.Success(data = resultResponse)
             }
         }
 
