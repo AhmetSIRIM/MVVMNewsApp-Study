@@ -8,13 +8,12 @@ import android.widget.Toast
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
-import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.GridLayoutManager
 import com.asirim.mvvmnewsappstudy.R
 import com.asirim.mvvmnewsappstudy.databinding.FragmentSearchNewsBinding
 import com.asirim.mvvmnewsappstudy.ui.NewsActivity
 import com.asirim.mvvmnewsappstudy.ui.NewsViewModel
 import com.asirim.mvvmnewsappstudy.ui.adapter.ArticleAdapter
-import com.asirim.mvvmnewsappstudy.util.Constants
 import com.asirim.mvvmnewsappstudy.util.Constants.SEARCH_NEWS_TIME_DELAY
 import com.asirim.mvvmnewsappstudy.util.Resource
 import kotlinx.coroutines.Job
@@ -43,12 +42,11 @@ class SearchNewsFragment : Fragment() {
 
         setupRecyclerView()
 
-        /* If you want to use serialization watch this: https://youtu.be/SlOTIcDQOqI */
         articleAdapter.setOnItemClickListener {
 
             findNavController().navigate(
                 SearchNewsFragmentDirections.actionSearchNewsFragmentToArticleFragment(
-                    it ?: Constants.MY_GITHUB_LINK_FOR_NULL_ARTICLE_URL
+                    it
                 )
             )
 
@@ -108,7 +106,7 @@ class SearchNewsFragment : Fragment() {
         articleAdapter = ArticleAdapter()
         binding.recyclerViewSearchedNews.apply {
             adapter = articleAdapter
-            layoutManager = LinearLayoutManager(activity)
+            layoutManager = GridLayoutManager(activity, 2)
         }
     }
 

@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="article_saved_successfully">Article saved successfully</string>
+    <string name="article_deleted_successfully">Article deleted successfully</string>
+</resources>

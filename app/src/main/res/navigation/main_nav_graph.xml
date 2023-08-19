@@ -28,8 +28,8 @@
         tools:layout="@layout/fragment_article">
 
         <argument
-            android:name="articleUrl"
-            app:argType="string" />
+            android:name="article"
+            app:argType="com.asirim.mvvmnewsappstudy.data.dto.Article" />
 
     </fragment>
 

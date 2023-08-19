@@ -13,7 +13,7 @@ import com.bumptech.glide.Glide
 class ArticleAdapter : RecyclerView.Adapter<ArticleViewHolder>() {
 
     private lateinit var binding: ItemArticleBinding
-    private var onItemClickListener: ((String?) -> Unit)? = null
+    private var onItemClickListener: ((Article) -> Unit)? = null
 
     private val differCallback = object : DiffUtil.ItemCallback<Article>() {
 
@@ -59,7 +59,7 @@ class ArticleAdapter : RecyclerView.Adapter<ArticleViewHolder>() {
 
         holder.itemView.setOnClickListener {
             onItemClickListener?.let {
-                it(article.url)
+                it(article)
             }
         }
 
@@ -67,7 +67,7 @@ class ArticleAdapter : RecyclerView.Adapter<ArticleViewHolder>() {
 
     override fun getItemCount() = differ.currentList.size
 
-    fun setOnItemClickListener(listener: (String?) -> Unit) {
+    fun setOnItemClickListener(listener: (Article) -> Unit) {
         onItemClickListener = listener
     }
 

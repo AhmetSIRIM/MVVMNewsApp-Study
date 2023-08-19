@@ -3,6 +3,7 @@ package com.asirim.mvvmnewsappstudy.ui
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.asirim.mvvmnewsappstudy.data.dto.Article
 import com.asirim.mvvmnewsappstudy.data.dto.NewsResponse
 import com.asirim.mvvmnewsappstudy.data.repository.NewsRepository
 import com.asirim.mvvmnewsappstudy.ui.breakingnews.BreakingNewsFragment.Companion.US
@@ -68,5 +69,16 @@ class NewsViewModel(
 
     }
 
+    fun upsertNews(article: Article) {
+        viewModelScope.launch {
+            newsRepository.upsertNews(article)
+        }
+    }
+
+    fun getAllArticles() = newsRepository.getAllArticles()
+
+    fun deleteArticle(article: Article) = viewModelScope.launch {
+        newsRepository.deleteArticle(article)
+    }
 
 }

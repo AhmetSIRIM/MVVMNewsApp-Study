@@ -8,13 +8,13 @@ import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
-import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.asirim.mvvmnewsappstudy.R
 import com.asirim.mvvmnewsappstudy.databinding.FragmentBreakingNewsBinding
 import com.asirim.mvvmnewsappstudy.ui.NewsActivity
 import com.asirim.mvvmnewsappstudy.ui.NewsViewModel
 import com.asirim.mvvmnewsappstudy.ui.adapter.ArticleAdapter
-import com.asirim.mvvmnewsappstudy.util.Constants.MY_GITHUB_LINK_FOR_NULL_ARTICLE_URL
 import com.asirim.mvvmnewsappstudy.util.Resource
 
 class BreakingNewsFragment : Fragment() {
@@ -39,15 +39,11 @@ class BreakingNewsFragment : Fragment() {
 
         setupRecyclerView()
 
-        /* If you want to use serialization watch this: https://youtu.be/SlOTIcDQOqI */
         articleAdapter.setOnItemClickListener {
-
             findNavController().navigate(
-                BreakingNewsFragmentDirections.actionBreakingNewsFragmentToArticleFragment(
-                    it ?: MY_GITHUB_LINK_FOR_NULL_ARTICLE_URL
-                )
+                BreakingNewsFragmentDirections
+                    .actionBreakingNewsFragmentToArticleFragment(it)
             )
-
         }
 
         getNewsFromUsOrTrBySwitch()
@@ -72,6 +68,7 @@ class BreakingNewsFragment : Fragment() {
                 }
 
             }
+
         }
 
     }
@@ -88,7 +85,7 @@ class BreakingNewsFragment : Fragment() {
         articleAdapter = ArticleAdapter()
         binding.recyclerViewBreakingNews.apply {
             adapter = articleAdapter
-            layoutManager = LinearLayoutManager(activity)
+            layoutManager = StaggeredGridLayoutManager(2, RecyclerView.VERTICAL)
         }
     }
 
