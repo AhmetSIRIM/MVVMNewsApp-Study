@@ -9,7 +9,6 @@ import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
-import com.asirim.mvvmnewsappstudy.R
 import com.asirim.mvvmnewsappstudy.databinding.FragmentSearchNewsBinding
 import com.asirim.mvvmnewsappstudy.ui.NewsActivity
 import com.asirim.mvvmnewsappstudy.ui.NewsViewModel
@@ -75,7 +74,7 @@ class SearchNewsFragment : Fragment() {
 
                 is Resource.Error -> Toast.makeText(
                     activity,
-                    R.string.unknown_error,
+                    searchedNewsResponse.message,
                     Toast.LENGTH_SHORT
                 ).show()
 

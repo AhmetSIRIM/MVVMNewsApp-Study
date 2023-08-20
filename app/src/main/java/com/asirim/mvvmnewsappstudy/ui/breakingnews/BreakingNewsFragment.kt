@@ -59,7 +59,7 @@ class BreakingNewsFragment : Fragment() {
 
                 is Resource.Error -> Toast.makeText(
                     activity,
-                    R.string.unknown_error,
+                    breakingNewsResponse.message,
                     Toast.LENGTH_SHORT
                 ).show()
 

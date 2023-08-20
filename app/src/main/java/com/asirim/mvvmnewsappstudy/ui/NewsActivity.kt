@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
+import com.asirim.mvvmnewsappstudy.MVVMNewsAppStudyApp
 import com.asirim.mvvmnewsappstudy.R
 import com.asirim.mvvmnewsappstudy.data.local.ArticleDatabase
 import com.asirim.mvvmnewsappstudy.data.repository.NewsRepository
@@ -22,7 +23,12 @@ class NewsActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         val newsRepository = NewsRepository(ArticleDatabase(this).getArticleDao())
-        val viewModelProviderFactory = NewsViewModelProviderFactory(newsRepository)
+
+        val viewModelProviderFactory = NewsViewModelProviderFactory(
+            newsRepository,
+            (application as MVVMNewsAppStudyApp)
+        )
+
         newsViewModel = ViewModelProvider(this, viewModelProviderFactory)[NewsViewModel::class.java]
 
         val navHostFragment =

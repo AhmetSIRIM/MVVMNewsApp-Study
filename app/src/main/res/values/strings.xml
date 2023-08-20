@@ -11,4 +11,6 @@
     <string name="published_at">Published at</string>
     <string name="article_saved_successfully">Article saved successfully</string>
     <string name="article_deleted_successfully">Article deleted successfully</string>
+    <string name="no_internet_connection">No internet connection</string>
+    <string name="conversion_error">Conversion error</string>
 </resources>
