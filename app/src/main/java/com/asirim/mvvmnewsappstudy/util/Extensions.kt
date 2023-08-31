@@ -13,7 +13,9 @@ fun String.formatStringTime(): String {
     val parser = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss")
     val formatter = SimpleDateFormat("dd.MM.yyyy - HH:mm")
 
-    return formatter.format(parser.parse(this) ?: "Unknown Time")
+    return if (this == "null") "Unknown Time" else formatter.format(
+        parser.parse(this) ?: "Unknown Time"
+    )
 
 }
 
